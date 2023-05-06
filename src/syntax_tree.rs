@@ -32,7 +32,7 @@ impl<T> SyntaxTree<T> {
 
     /// Add another SyntaxTree as last child of this tree
     pub fn push_node(&mut self, new_node: SyntaxTree<T>) {
-        todo!()
+        self.children.push(new_node); 
     }
 
     /// Create a new SyntaxTree with a root node that carries the given value. Add the created tree
