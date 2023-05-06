@@ -50,7 +50,15 @@ impl Stack for ListStack {
     }
 
     fn top_val(&self) -> Option<&i32> {
-        todo!()
+        match self {
+            Val(value, other) => {
+                match other {
+                    Some(ele) => return (*ele).top_val(),
+                    None => return Some(value),
+                }
+            },
+            Nil => None
+        }
     }
 
     fn pop_val(&mut self) -> Option<i32> {
