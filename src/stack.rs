@@ -1,29 +1,28 @@
 use crate::Stack;
 
-// TODO Complete implementation
 impl Stack for Vec<i32> {
     fn init() -> Self {
-        todo!()
+        vec![]
     }
 
     fn push_val(&mut self, i: i32) {
-        todo!()
+        self.push(i)
     }
 
     fn top_val(&self) -> Option<&i32> {
-        todo!()
+        self.last()
     }
 
     fn pop_val(&mut self) -> Option<i32> {
-        todo!()
+        self.pop()
     }
 
     fn is_empty(&self) -> bool {
-        todo!()
+        self.is_empty()
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum ListStack {
     Val(i32, Option<Box<ListStack>>),
     Nil,
@@ -40,31 +39,55 @@ impl Stack for ListStack {
 
     fn push_val(&mut self, i: i32) {
         match self {
-            Val(value, other) => *self = todo!(),
-            Nil => *self = todo!(),
+            Val(value, other) => {
+                match other {
+                    Some(ele) => return (*ele).push_val(i),
+                    None => *other = Some(Box::new(ListStack::Val(i, None))),
+                }
+            },
+            Nil => *self = ListStack::Val(i, None),
         };
     }
 
     fn top_val(&self) -> Option<&i32> {
-        todo!()
+        match self {
+            Val(value, other) => {
+                match other {
+                    Some(ele) => return (*ele).top_val(),
+                    None => return Some(value),
+                }
+            },
+            Nil => None
+        }
     }
 
     fn pop_val(&mut self) -> Option<i32> {
         match self {
             Val(value, other) => {
-                let popped_value = *value;
-                match other.take() {
-                    None => *self = Nil,
-                    Some(other) => todo!(),
+                match other {
+                    Some(ele) => {
+                        let ret = (*ele).pop_val();
+                        if (**ele) == Nil {
+                            *other = None;
+                        }
+                        return ret;
+                    },
+                    None => {
+                        let ret:i32 = *value;
+                        *self = Nil;
+                        return Some(ret);
+                    },
                 };
-                todo!()
-            }
+            },
             Nil => None,
         }
     }
 
     fn is_empty(&self) -> bool {
-        todo!()
+        match self {
+            Val(_,_) => return false,
+            Nil => return true,
+        } 
     }
 }
 
