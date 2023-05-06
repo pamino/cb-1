@@ -84,7 +84,10 @@ impl Stack for ListStack {
     }
 
     fn is_empty(&self) -> bool {
-        todo!()
+        match self {
+            Val(_,_) => return false,
+            Nil => return true,
+        } 
     }
 }
 
