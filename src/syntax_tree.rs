@@ -71,8 +71,16 @@ impl<T> SyntaxTree<T> {
     pub fn find_node(&self, predicate: fn(&SyntaxTree<T>) -> bool) -> Option<&SyntaxTree<T>> {
         if predicate(self) {
             Some(self)
+        } else if self.children.is_empty() {
+            None
         } else {
-            todo!()
+            for ele in &self.children {
+                match ele.find_node(predicate.clone()) {
+                    Some(e) => return Some(e),
+                    None => continue,
+                }
+            }
+            None
         }
     }
 
