@@ -39,8 +39,13 @@ impl Stack for ListStack {
 
     fn push_val(&mut self, i: i32) {
         match self {
-            Val(value, other) => *self = todo!(),
-            Nil => *self = todo!(),
+            Val(value, other) => {
+                match other {
+                    Some(ele) => return (*ele).push_val(i),
+                    None => *other = Some(Box::new(ListStack::Val(i, None))),
+                }
+            },
+            Nil => *self = ListStack::Val(i, None),
         };
     }
 
