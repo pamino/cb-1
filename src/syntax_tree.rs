@@ -43,7 +43,9 @@ impl<T> SyntaxTree<T> {
 
     /// Add another SyntaxTree as first child of this tree
     pub fn prepend_node(&mut self, new_node: SyntaxTree<T>) {
-        todo!()
+        let mut children = vec![new_node];
+        children.append(&mut self.children);
+        self.children = children;
     }
 
     /// Create a new SyntaxTree with a root node that carries the given value. Add the created tree
