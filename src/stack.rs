@@ -1,25 +1,24 @@
 use crate::Stack;
 
-// TODO Complete implementation
 impl Stack for Vec<i32> {
     fn init() -> Self {
-        todo!()
+        vec![]
     }
 
     fn push_val(&mut self, i: i32) {
-        todo!()
+        self.push(i)
     }
 
     fn top_val(&self) -> Option<&i32> {
-        todo!()
+        self.last()
     }
 
     fn pop_val(&mut self) -> Option<i32> {
-        todo!()
+        self.pop()
     }
 
     fn is_empty(&self) -> bool {
-        todo!()
+        self.is_empty()
     }
 }
 
