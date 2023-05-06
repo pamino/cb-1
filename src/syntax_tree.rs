@@ -90,8 +90,20 @@ impl<T> SyntaxTree<T> {
     pub fn find_node_mut(
         &mut self,
         predicate: fn(&SyntaxTree<T>) -> bool,
-    ) -> Option<&SyntaxTree<T>> {
-        todo!()
+    ) -> Option<&mut SyntaxTree<T>> {
+        if predicate(self) {
+            Some(self)
+        } else if self.children.is_empty() {
+            None
+        } else {
+            for ele in &mut self.children {
+                match ele.find_node(predicate.clone()) {
+                    Some(_) => return Some(ele),
+                    None => continue,
+                }
+            }
+            None
+        }
     }
 
     /// Return a reference to the value carried by the root of this tree
