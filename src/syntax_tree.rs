@@ -23,7 +23,11 @@ fn next_id() -> ID {
 impl<T> SyntaxTree<T> {
     /// Create a SyntaxTree with a root node that carries the given value
     pub fn new(value: T) -> SyntaxTree<T> {
-        todo!()
+        SyntaxTree {
+            id: next_id(),
+            value,
+            children: vec![],
+        }
     }
 
     /// Add another SyntaxTree as last child of this tree
