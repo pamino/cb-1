@@ -22,7 +22,7 @@ impl Stack for Vec<i32> {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum ListStack {
     Val(i32, Option<Box<ListStack>>),
     Nil,
@@ -64,13 +64,21 @@ impl Stack for ListStack {
     fn pop_val(&mut self) -> Option<i32> {
         match self {
             Val(value, other) => {
-                let popped_value = *value;
-                match other.take() {
-                    None => *self = Nil,
-                    Some(other) => todo!(),
+                match other {
+                    Some(ele) => {
+                        let ret = (*ele).pop_val();
+                        if (**ele) == Nil {
+                            *other = None;
+                        }
+                        return ret;
+                    },
+                    None => {
+                        let ret:i32 = *value;
+                        *self = Nil;
+                        return Some(ret);
+                    },
                 };
-                todo!()
-            }
+            },
             Nil => None,
         }
     }
